@@ -17,9 +17,9 @@ data/
   did_city_panel_2017_2025_v8.csv    City-year panel (2,655 obs; 295 cities; 2017-2025)
   geo/W_knn5.json                    k-nearest-neighbour spatial weight matrix (k=5)
   geo/city_geo.csv                   City coordinates for spatial analyses
-  raw/jobs/ai_jobs_v3_20261025.csv   AI job postings (job-board, anonymised)
-  raw/jobs/commercial_jobs_20261025.csv  Non-AI (commercial) job postings (job-board)
   analysis/jobs_city_exposure.csv    City-level AI job exposure aggregates
+
+  (job-level posting records are internal research data — see note below)
 ```
 
 ## Reproduction
@@ -32,9 +32,9 @@ python code/did_v8_full.py      # main TWFE + event study + Bacon + CS + PSM + p
 python code/did_v8_robust.py    # COVID-drop, regional heterogeneity, time placebo
 python code/did_v8_sdm.py       # spatial DID (Moran's I, SUTVA / indirect effects)
 python code/did_v8_cluster.py   # cluster-robust and wild-cluster-bootstrap inference
-python code/w9_jobs_exposure.py # AI job exposure aggregation
+python code/w9_jobs_exposure.py # AI job exposure aggregation (needs job-level inputs, see note)
 python code/w11_mechanism.py    # panel mediation/moderation
-python code/w12_mechanism_boost.py  # job-level substitute-vs-augment wage DD
+python code/w12_mechanism_boost.py  # job-level substitute-vs-augment wage DD (needs job-level inputs)
 python code/generate_figures_en.py  # regenerates the manuscript figures
 ```
 
@@ -53,14 +53,24 @@ yearbook pages and is large); the panel is provided directly as
 to document the variable definitions. The DID analyses run entirely from the provided
 panel.
 
+### Note on job-level inputs
+
+The job-level posting records (`ai_jobs_v3_20261025.csv`, `commercial_jobs_20261025.csv`)
+are **internal research data**: they contain employer- and location-level information and
+are subject to the data-use terms of the source platforms, so they are **not distributed**
+in this repository. The city-level aggregate `data/analysis/jobs_city_exposure.csv` is
+provided and supports the city-level exposure and mediation analyses. `w9_jobs_exposure.py`
+and `w12_mechanism_boost.py` are included for transparency; re-running their job-level steps
+requires the (non-distributed) job-level inputs.
+
 ## Data sources
 
 - City-level GDP, income, employment, population, and structure: public statistical
   yearbooks (national, provincial, and city editions, 2017–2025).
 - AI pilot-zone designation (18 cities; 2019/2020/2021 batches): Ministry of Science
   and Technology (MOST) public announcements.
-- Job postings: anonymised job-board data (used only for the exposure and wage
-  substitutability analyses).
+- Job postings: internal research data from job boards; the city-level aggregate
+  exposure is provided, the job-level records are not distributed (see note above).
 
 ## Key result (summary)
 
@@ -77,5 +87,5 @@ If you use this package, please cite the paper and this replication repository.
 ## License
 
 Data and code are released for reproducibility. Data remain the property of their
-original public sources; job-board data are aggregated/anonymised and are not for
-redistribution in identifiable form.
+original public sources. Job-level board records are internal research data subject to
+source-platform terms and are not redistributed; only the city-level aggregate is shared.
