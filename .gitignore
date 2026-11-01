@@ -1,0 +1,12 @@
+# --- local / private ---
+.gh_token.txt
+*.log
+
+# --- generated analysis output (data + code only is shared) ---
+data/analysis/*.md
+
+# --- python ---
+__pycache__/
+*.pyc
+.venv/
+venv/
